@@ -16,8 +16,13 @@ class Client
         $this->httpClient = $httpClient;
     }
 
+    public function get(array $parameters = [])
+    {
+        $this->httpClient->request('GET', self::API_BASE_URL, ['query' => $parameters]);
+    }
+
     public static function getInstance(): self
     {
-        return new self(new HttpClient(array('base_uri' => self::API_BASE_URL)));
+        return new self(new HttpClient(['base_uri' => self::API_BASE_URL]));
     }
 }
