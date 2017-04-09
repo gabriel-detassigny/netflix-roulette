@@ -52,6 +52,18 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->get();
     }
 
+    /**
+     * @expectedException \GabrielDeTassigny\NetflixRoulette\Exception\ClientErrorException
+     * @expectedExceptionCode 400
+     */
+    public function testClientError(): void
+    {
+        Phake::when($this->response)->getStatusCode()->thenReturn(400);
+        Phake::when($this->response)->getReasonPhrase()->thenReturn('Bad Request');
+
+        $this->client->get();
+    }
+
     public function testGetStaticInstance(): void
     {
         $this->assertInstanceOf(Client::class, Client::getInstance());

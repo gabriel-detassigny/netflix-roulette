@@ -3,6 +3,7 @@
 namespace GabrielDeTassigny\NetflixRoulette;
 
 use GabrielDeTassigny\NetflixRoulette\Exception\ApiErrorException;
+use GabrielDeTassigny\NetflixRoulette\Exception\ClientErrorException;
 use GuzzleHttp\Client as HttpClient;
 
 class Client
@@ -23,6 +24,9 @@ class Client
         if ($this->isServerError($response->getStatusCode())) {
             throw new ApiErrorException($response->getReasonPhrase(), $response->getStatusCode());
         }
+        if ($this->isClientError($response->getStatusCode())) {
+            throw new ClientErrorException($response->getReasonPhrase(), $response->getStatusCode());
+        }
         return $response->getBody();
     }
 
@@ -34,5 +38,10 @@ class Client
     private function isServerError(int $status): bool
     {
         return ($status >= 500);
+    }
+
+    private function isClientError(int $status): bool
+    {
+        return ($status >= 400 && $status < 500);
     }
 }
