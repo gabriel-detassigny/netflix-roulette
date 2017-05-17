@@ -90,7 +90,7 @@ class TvShow implements Show
         return $this->netflixUrl;
     }
 
-    public function getType(): int
+    public function getType(): string
     {
         return self::TYPE;
     }

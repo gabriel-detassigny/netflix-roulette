@@ -17,6 +17,6 @@ interface Show
     public function getSummary(): string;
     public function getPosterUrl(): string;
     public function getNetflixUrl(): string;
-    public function getType(): int;
+    public function getType(): string;
     public function getRuntime(): int;
 }
