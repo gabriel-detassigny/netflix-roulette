@@ -2,15 +2,15 @@
 
 namespace GabrielDeTassigny\NetflixRoulette\Tests\Show;
 
-use Phake;
+use GabrielDeTassigny\NetflixRoulette\Show\Movie;
+use GabrielDeTassigny\NetflixRoulette\Show\ShowCollection;
 use PHPUnit_Framework_TestCase;
 use GabrielDeTassigny\NetflixRoulette\Show\ShowFactory;
-use GabrielDeTassigny\NetflixRoulette\Show\Show;
 use GabrielDeTassigny\NetflixRoulette\Show\TvShow;
 
 class ShowFactoryTest extends PHPUnit_Framework_TestCase
 {
-    /** ShowFactory */
+    /** @var ShowFactory */
     private $factory;
 
     public function setUp()
@@ -26,6 +26,14 @@ class ShowFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TvShow::class, $tvShow);
     }
 
+    public function testGetMovie()
+    {
+        $attributes = $this->getAttributes(2);
+        $movie = $this->factory->getShow($attributes);
+
+        $this->assertInstanceOf(Movie::class, $movie);
+    }
+
     /**
      * @expectedException \GabrielDeTassigny\NetflixRoulette\Exception\ApiErrorException
      */
@@ -33,6 +41,17 @@ class ShowFactoryTest extends PHPUnit_Framework_TestCase
     {
         $attributes = $this->getAttributes(42);
         $this->factory->getShow($attributes);
+    }
+
+    public function testGetShowCollection()
+    {
+        $shows = [
+            $this->getAttributes(1),
+            $this->getAttributes(2)
+        ];
+        $collection = $this->factory->getShowCollection($shows);
+
+        $this->assertInstanceOf(ShowCollection::class, $collection);
     }
 
     private function getAttributes($mediaType): array
