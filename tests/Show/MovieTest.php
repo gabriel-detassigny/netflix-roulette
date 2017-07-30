@@ -75,7 +75,7 @@ class MovieTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSummary()
     {
-        $this->assertSame('Some random show', $this->movie->getSummary());
+        $this->assertSame('Some random movie', $this->movie->getSummary());
     }
 
     public function testGetPosterUrl()
@@ -90,11 +90,11 @@ class MovieTest extends \PHPUnit_Framework_TestCase
 
     public function testGetType()
     {
-        $this->assertSame('tv-show', $this->movie->getType());
+        $this->assertSame('movie', $this->movie->getType());
     }
 
     public function testGetRuntime()
     {
-        $this->assertSame(42, $this->movie->getRuntime());
+        $this->assertSame(142, $this->movie->getRuntime());
     }
 }

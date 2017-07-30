@@ -28,7 +28,7 @@ class ShowFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testGetMovie()
     {
-        $attributes = $this->getAttributes(2);
+        $attributes = $this->getAttributes(0);
         $movie = $this->factory->getShow($attributes);
 
         $this->assertInstanceOf(Movie::class, $movie);
@@ -47,7 +47,7 @@ class ShowFactoryTest extends PHPUnit_Framework_TestCase
     {
         $shows = [
             $this->getAttributes(1),
-            $this->getAttributes(2)
+            $this->getAttributes(0)
         ];
         $collection = $this->factory->getShowCollection($shows);
 

@@ -6,6 +6,8 @@ use GabrielDeTassigny\NetflixRoulette\Exception\ApiErrorException;
 
 class ShowFactory
 {
+    const TYPE_KEY = 'mediatype';
+
     /**
      * @param array $showAttributes
      * @return Show
@@ -13,11 +15,11 @@ class ShowFactory
      */
     public function getShow(array $showAttributes): Show
     {
-        switch ($showAttributes['mediatype']) {
+        switch ($showAttributes[self::TYPE_KEY]) {
+            case 0:
+                return new Movie($showAttributes);
             case 1:
                 return new TvShow($showAttributes);
-            case 2:
-                return new Movie($showAttributes);
             default:
                 throw new ApiErrorException('Wrong type returned by the API');
         }

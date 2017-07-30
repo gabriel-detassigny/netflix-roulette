@@ -4,6 +4,7 @@ namespace GabrielDeTassigny\NetflixRoulette;
 
 use GabrielDeTassigny\NetflixRoulette\Exception\ApiErrorException;
 use GabrielDeTassigny\NetflixRoulette\Exception\ClientErrorException;
+use GabrielDeTassigny\NetflixRoulette\Show\ShowCollection;
 use GuzzleHttp\Client as HttpClient;
 use Psr\Http\Message\ResponseInterface;
 use GabrielDeTassigny\NetflixRoulette\Show\Show;
@@ -32,18 +33,30 @@ class Client
      * @throws ApiErrorException
      * @throws ClientErrorException
      */
-    public function get(array $parameters = []): Show
+    public function findOne(array $parameters): Show
     {
-        $response = $this->httpClient->request('GET', self::API_BASE_URL, ['query' => $parameters]);
-        if ($this->isServerError($response->getStatusCode())) {
-            throw new ApiErrorException($response->getReasonPhrase(), $response->getStatusCode());
+        $responseContent = $this->sendShowRequest($parameters);
+
+        if ($this->isResponseListOfShows($responseContent)) {
+            return $this->showFactory->getShow($responseContent[0]);
         }
-        if ($this->isClientError($response->getStatusCode())) {
-            throw new ClientErrorException($response->getReasonPhrase(), $response->getStatusCode());
-        }
-        $responseContent = $this->getFormattedResponse($response);
-        
         return $this->showFactory->getShow($responseContent);
+    }
+
+    /**
+     * @param array $parameters
+     * @return ShowCollection
+     * @throws ApiErrorException
+     * @throws ClientErrorException
+     */
+    public function findMany(array $parameters): ShowCollection
+    {
+        $responseContent = $this->sendShowRequest($parameters);
+
+        if ($this->isResponseListOfShows($responseContent)) {
+            return $this->showFactory->getShowCollection($responseContent);
+        }
+        return $this->showFactory->getShowCollection([$responseContent]);
     }
 
     /**
@@ -84,5 +97,36 @@ class Client
     private function isClientError(int $status): bool
     {
         return ($status >= 400 && $status < 500);
+    }
+
+    /**
+     * @param array $response
+     * @return bool
+     */
+    private function isResponseListOfShows(array $response): bool
+    {
+        if (count($response) > 0) {
+            if (isset($response[0]) && is_array($response[0]) && isset($response[0][ShowFactory::TYPE_KEY])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param array $parameters
+     * @return array
+     */
+    private function sendShowRequest(array $parameters): array
+    {
+        $response = $this->httpClient->request('GET', self::API_BASE_URL, ['query' => $parameters]);
+        if ($this->isServerError($response->getStatusCode())) {
+            throw new ApiErrorException($response->getReasonPhrase(), $response->getStatusCode());
+        }
+        if ($this->isClientError($response->getStatusCode())) {
+            throw new ClientErrorException($response->getReasonPhrase(), $response->getStatusCode());
+        }
+        $responseContent = $this->getFormattedResponse($response);
+        return $responseContent;
     }
 }
