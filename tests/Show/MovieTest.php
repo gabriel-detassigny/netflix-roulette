@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gabriel
- * Date: 30/07/2017
- * Time: 21:17
- */
 
 namespace GabrielDeTassigny\NetflixRoulette\Tests\Show;
 
 use GabrielDeTassigny\NetflixRoulette\Show\Movie;
+use PHPUnit_Framework_TestCase;
 
-class MovieTest extends \PHPUnit_Framework_TestCase
+class MovieTest extends PHPUnit_Framework_TestCase
 {
     /** Movie */
     private $movie;

@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gabriel
- * Date: 30/07/2017
- * Time: 21:38
- */
 
 namespace GabrielDeTassigny\NetflixRoulette\Tests\Show;
 
 use GabrielDeTassigny\NetflixRoulette\Show\Show;
 use GabrielDeTassigny\NetflixRoulette\Show\ShowCollection;
 use Phake;
+use PHPUnit_Framework_TestCase;
 
-class ShowCollectionTest extends \PHPUnit_Framework_TestCase
+class ShowCollectionTest extends PHPUnit_Framework_TestCase
 {
     public function testAddOneShow()
     {
