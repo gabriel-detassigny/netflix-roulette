@@ -19,6 +19,9 @@ class TvShow implements Show
     private $netflixUrl;
     private $runtime;
 
+    /**
+     * @param array $attributes
+     */
     public function __construct(array $attributes)
     {
         $this->id = $attributes['unit'];
@@ -35,66 +38,105 @@ class TvShow implements Show
         $this->runtime = (int) $attributes['runtime'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNetflixId(): int
     {
         return $this->netflixId;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getReleaseYear(): int
     {
         return $this->releaseYear;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRating(): float
     {
         return $this->rating;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCategory(): string
     {
         return $this->category;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCast(): string
     {
         return $this->cast;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDirector(): string
     {
         return $this->director;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSummary(): string
     {
         return $this->summary;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPosterUrl(): string
     {
         return $this->posterUrl;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNetflixUrl(): string
     {
         return $this->netflixUrl;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getType(): string
     {
         return self::TYPE;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRuntime(): int
     {
         return $this->runtime;

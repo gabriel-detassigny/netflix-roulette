@@ -16,13 +16,23 @@ class Client
     private $httpClient;
     private $showFactory;
 
+    /**
+     * @param HttpClient $httpClient
+     * @param ShowFactory $showFactory
+     */
     public function __construct(HttpClient $httpClient, ShowFactory $showFactory)
     {
         $this->httpClient = $httpClient;
         $this->showFactory = $showFactory;
     }
 
-    public function get(array $parameters = [])
+    /**
+     * @param array $parameters
+     * @return Show
+     * @throws ApiErrorException
+     * @throws ClientErrorException
+     */
+    public function get(array $parameters = []): Show
     {
         $response = $this->httpClient->request('GET', self::API_BASE_URL, ['query' => $parameters]);
         if ($this->isServerError($response->getStatusCode())) {
@@ -36,6 +46,9 @@ class Client
         return $this->showFactory->getShow($responseContent);
     }
 
+    /**
+     * @return self
+     */
     public static function getInstance(): self
     {
         return new self(
@@ -44,6 +57,10 @@ class Client
         );
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     */
     private function getFormattedResponse(ResponseInterface $response): array
     {
         $rawResponse = $response->getBody()->getContents();
@@ -51,11 +68,19 @@ class Client
         return json_decode($rawResponse, true);
     }
 
+    /**
+     * @param int $status
+     * @return bool
+     */
     private function isServerError(int $status): bool
     {
         return ($status >= 500);
     }
 
+    /**
+     * @param int $status
+     * @return bool
+     */
     private function isClientError(int $status): bool
     {
         return ($status >= 400 && $status < 500);

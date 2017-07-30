@@ -6,6 +6,11 @@ use GabrielDeTassigny\NetflixRoulette\Exception\ApiErrorException;
 
 class ShowFactory
 {
+    /**
+     * @param array $showAttributes
+     * @return Show
+     * @throws ApiErrorException
+     */
     public function getShow(array $showAttributes): Show
     {
         switch ($showAttributes['mediatype']) {
