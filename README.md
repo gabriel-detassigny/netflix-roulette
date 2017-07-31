@@ -15,7 +15,7 @@ composer require gdetassigny/netflix-roulette
 
 ## Usage
 
-The API should allow you to retrieve movies and tv shows for given criteria.
+The API should allow you to retrieve movies and tv shows for given parameters.
 (e.g. retrieve all netflix movies starring Brad Pitt).
 
 Here is an example of how you could use this wrapper :
