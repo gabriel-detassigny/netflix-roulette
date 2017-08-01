@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/gabriel-detassigny/netflix-roulette.svg?branch=master)](https://travis-ci.org/gabriel-detassigny/netflix-roulette)
 
+[![Coverage Status](https://coveralls.io/repos/github/gabriel-detassigny/netflix-roulette/badge.svg?branch=master)](https://coveralls.io/github/gabriel-detassigny/netflix-roulette?branch=master)
+
+
 This is an unofficial PHP wrapper for the [Netflix Roulette API](https://netflixroulette.net/api/).
 
 ## Installation
